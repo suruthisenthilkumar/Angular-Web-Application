@@ -1,0 +1,25 @@
+<!-- Navbar -->
+<nav class="navbar fixed-top navbar-expand-lg scrolling-navbar">
+    <mat-toolbar class="toolbar">
+        <button color="primary" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="toggleSidenav()"
+            *ngIf="isHandset$ | async">
+            <i class="material-icons" id="menubutton" style="color: white; font-size: 35px; margin-left: .0em;"> list
+            </i>
+        </button>
+        <a href="https://www..com/"><img src="assets/logo.png"></a>
+        <a class="Portallogo"
+            (click)="gotoDashboard()" routerLinkActive="active"><span class="logo">&nbsp;Portal</span></a>
+
+        <span class="example-spacer2"></span>
+            <button class="settings" mat-icon-button matTooltip="Configuration Settings" (click)="gotoConfig()"  *ngIf='isActiveAdmin'>
+                <mat-icon class="settingIcon" svgIcon="settings"></mat-icon> 
+            </button>
+        <button mat-button [matMenuTriggerFor]="menu" class="menu">
+            <mat-icon class="exitIcon" svgIcon="exit_to_app"></mat-icon> <span> {{username}} </span>
+        </button>
+        <mat-menu #menu="matMenu">
+            <!-- <button *ngIf='!manager&&!guest' mat-menu-item routerLink='/Portal/changePass'>Change Password </button> -->
+            <button mat-menu-item (click)=logout()>Logout </button>
+        </mat-menu>
+    </mat-toolbar>
+</nav>

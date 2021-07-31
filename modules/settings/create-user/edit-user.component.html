@@ -1,0 +1,56 @@
+<div class="center-align">
+    <h4 class="popup-title">
+        <span *ngIf="data.type=='edit';else createheading"> EDIT USER </span>
+        <ng-template #createheading>CREATE USER</ng-template>
+    </h4>
+</div>
+<hr class="hr"><br>
+<form [formGroup]="userDetails" class="form">
+    <div *ngIf="data.type=='edit';else createBody">
+        <mat-form-field appearance="outline" class="outline">
+            <input matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="outline">
+            <input matInput placeholder="Designation" formControlName="designation">
+        </mat-form-field>
+    </div>
+    <ng-template #createBody>
+        <mat-form-field appearance="outline" class="outline">
+            <input matInput placeholder="Username" formControlName="email" [pattern]="emailPattern">
+            <mat-error *ngIf="userDetails.controls.email.errors?.pattern">Email is not valid</mat-error> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Role</mat-label>
+            <mat-select name="admin" formControlName="role" required>
+                <mat-option value="performancehead">Performance Head</mat-option>
+                <mat-option value="performancelead">Performance Lead</mat-option>
+            </mat-select>
+        </mat-form-field>
+         <mat-form-field appearance="outline" class="example-full-width outline">
+            <mat-label>Location</mat-label>
+            <mat-select #location name="loginAs" formControlName="location" required>
+              <mat-option value="corp.ads.Company.net">Corporate / Head Office</mat-option>
+              <mat-option value="lsz.ads.Company.net">Company SEZ</mat-option>
+              <mat-option value="SLS.ads.Company.net">Company Solutions</mat-option>
+              <mat-option value="T02.ads.Company.net">Company Technologies Unit – 2</mat-option>
+              <mat-option value="T03.ads.Company.net">Company Technologies Unit – 3</mat-option>
+              <mat-option value="php.ads.Company.net">PHP / Cebu Office</mat-option>
+              <mat-option value="ro.ads.Company.net">Company Romania</mat-option>
+            </mat-select>
+          </mat-form-field> 
+    </ng-template>
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Admin Status</mat-label>
+        <mat-select name="admin" formControlName="admin_status" required>
+            <mat-option value="true">True</mat-option>
+            <mat-option value="false">False</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="center-align">
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button mat-button (click)="save()" *ngIf="data.type=='edit'" [disabled]="!userDetails.valid||!userDetails.dirty">Save Changes</button>
+        <button mat-button (click)="create()" *ngIf="data.type=='create'" [disabled]="!userDetails.valid">Submit</button>
+    </div>
+    
+</form>

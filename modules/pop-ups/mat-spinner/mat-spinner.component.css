@@ -1,0 +1,7 @@
+ .mat-dialog-container{
+    box-shadow: none;
+  }
+  ::ng-deep.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #168316;
+    fill: rgba(255, 255, 255, 0.877) !important;
+    }

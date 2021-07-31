@@ -1,0 +1,26 @@
+
+.content{
+    /* padding-left: 250p; */
+    margin-left: 30%;
+}
+.mat-card{
+    /* box-shadow: none; */
+    background: white !important;
+}
+.gray{
+    background-color: rgb(130, 133, 130);
+}
+::ng-deep :host /deep/ .mat-checkbox-checked .mat-checkbox-background,
+::ng-deep :host /deep/  .mat-checkbox-indeterminate .mat-checkbox-background {
+  background-color: rgb(2, 0, 139) !important;  
+}
+::ng-deep .Spinner mat-dialog-container{
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+  
+.center-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

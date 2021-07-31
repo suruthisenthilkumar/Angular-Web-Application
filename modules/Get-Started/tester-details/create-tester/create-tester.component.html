@@ -1,0 +1,29 @@
+<div style="padding-top: 2%; padding-bottom: 1%; background-color: rgb(44, 43, 43)" class="center-align"><h4 style="color: white;" class="popup-title">CREATE NEW SME</h4>
+</div>
+<hr class="hr">
+
+<form [formGroup]="testerForm" class="form">
+      <mat-form-field class="outline" appearance="outline">
+          <input matInput placeholder="Email" name="Email" type="text" formControlName="email"  required  [pattern]="emailPattern"><br>
+          <mat-error *ngIf="testerForm.controls.email.errors?.required">Email is required</mat-error> 
+          <mat-error *ngIf="testerForm.controls.email.errors?.pattern">Email is not valid</mat-error> 
+      </mat-form-field>
+      <br>
+    <mat-form-field  class="full-width" appearance="outline">
+      <mat-label>Location</mat-label>
+      <mat-select formControlName="location" required>
+        <mat-option value="corp.ads.Company.net">Corporate / Head Office</mat-option> 
+        <mat-option value="lsz.ads.Company.net">Company SEZ</mat-option> 
+        <mat-option value="SLS.ads.Company.net">Company Solutions</mat-option> 
+        <mat-option value="T02.ads.Company.net">Company Technologies Unit – 2</mat-option> 
+        <mat-option value="T03.ads.Company.net">Company Technologies Unit – 3</mat-option> 
+        <mat-option value="php.ads.Company.net">PHP / Cebu Office</mat-option> 
+        <mat-option value="ro.ads.Company.net">Company Romania</mat-option>
+      </mat-select>
+  </mat-form-field><br>
+  </form>
+  <div style="display: flex; justify-content: center;" > 
+    <button mat-raised-button class="cancel" (click)="clearBar()">Cancel</button>&nbsp;
+    <button mat-raised-button (click)="create()" id="btndisable" [disabled]='!testerForm.valid'>Create</button>
+    </div>
+<hr class="hr">

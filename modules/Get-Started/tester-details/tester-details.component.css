@@ -1,0 +1,30 @@
+ #add{
+    background-color: white;
+    /* left: 1em; */
+    /* position: relative; */
+}
+ .mat-icon-button{
+    width: 37px !important;
+    height: 36px !important;
+}
+.form{
+    width: 100%;
+}
+:host /deep/  .mat-form-field-appearance-outline .mat-form-field-infix {
+    height: 40px !important;
+    padding: .3em 0 .5em 0 !important;
+    font-size: 14px !important; 
+  }
+:host /deep/ .outline .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+    text-align: left;
+    top: -25px !important;
+  }
+  :host /deep/ .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+    text-align: left;
+    top: -18px !important;
+  }
+  .outline,.full-width{
+      width: 100%;
+  }
+
+ 

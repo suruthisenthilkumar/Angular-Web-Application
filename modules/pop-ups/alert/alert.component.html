@@ -1,0 +1,19 @@
+<!-- <mat-dialog-content style="color:black">
+	<p>
+		{{message}}
+	</p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+		<button mat-raised-button color="primary" (click)='onConfirmClick()' style="background-color: rgb(255, 242, 242);color: black;"> {{confirmButtonText}} </button>
+		<button *ngIf='cancelButton' mat-button color="primary" matDialogClose>{{cancelButtonText}}</button>
+</mat-dialog-actions> -->
+<div class="modal-header">
+	<h4 class="modal-title">{{ title }}</h4>
+	</div>
+	<div class="modal-body">
+	  {{ message }}
+	</div>
+	<div class="modal-footer">
+	  <button mat-raised-button class="cancel"  *ngIf='cancelButton'  matDialogClose>{{ cancelButtonText }}</button>
+	  <button mat-raised-button class="btn confirm" (click)="onConfirmClick()">{{ confirmButtonText }}</button>
+	</div>

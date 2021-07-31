@@ -1,0 +1,9 @@
+
+.cdk-overlay-container .cdk-overlay-pane .testClass{
+    margin-top: 20%;
+    margin-left: 10% !important;
+    min-width: calc(90% + 64px) !important;
+    width: 200px!important;
+    }
+  
+      

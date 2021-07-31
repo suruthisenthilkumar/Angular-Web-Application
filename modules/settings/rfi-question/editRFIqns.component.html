@@ -1,0 +1,80 @@
+<div class="center-align">
+    <h4 class="popup-title">
+        <span *ngIf="data.type=='edit';else create"> EDIT RFI QUESTION </span>
+        <ng-template #create>CREATE RFI QUESTION </ng-template>
+    </h4>
+</div>
+<mat-form-field appearance="outline" class="outline" *ngIf="data.type=='add'">
+    <mat-label>Question Type</mat-label>
+    <mat-select [(ngModel)]="question_type">
+        <mat-option *ngFor="let type of data.info" [value]="type">{{type}}</mat-option>
+    </mat-select>
+</mat-form-field>
+
+<form [formGroup]="qnDetails" class="form">
+    <mat-form-field appearance="outline" class="outline">
+        <mat-label>Question</mat-label>
+        <input matInput placeholder="Question" formControlName="question">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="outline">
+        <mat-label>Input Type</mat-label>
+        <mat-select #inputSelect formControlName="inputType">
+            <mat-option value="text">Text</mat-option>
+            <mat-option value="radio">Radio</mat-option>
+            <mat-option value="radioGroup">Conditional Radio Group</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="qnDetails.value.inputType==='radioGroup'">
+        <mat-form-field appearance="outline" class="outline">
+            <mat-label>Conditional Input</mat-label>
+            <mat-select #inputSelect formControlName="entryValue">
+                <mat-option value="yes">Yes</mat-option>
+                <mat-option value="no">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="outline">
+            <mat-label>Conditional Input placeholder</mat-label>
+            <input matInput placeholder="Conditional Input placeholder" formControlName="condnInputPlaceholder">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="outline">
+            <mat-label>Conditional Input ToolTip</mat-label>
+            <input matInput placeholder="Conditional Input ToolTip" formControlName="tooltip">
+        </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" class="outline" *ngIf="qnDetails.value.inputType==='radio'">
+        <mat-label>Radio Values</mat-label>
+        <input matInput placeholder="Radio Values" formControlName="radioValues" [pattern]="csvPattern"  [errorStateMatcher]="matcher">
+        <mat-hint>Enter radio values in a comma separated format.Eg: Yes,No</mat-hint>
+        <mat-error *ngIf="qnDetails.controls.radioValues.errors?.pattern">CSV format required</mat-error>
+    </mat-form-field>
+    <div *ngIf="qnDetails.value.inputType==='text'">
+        <mat-form-field appearance="outline" class="outline">
+            <mat-label>ToolTip</mat-label>
+            <input matInput placeholder="ToolTip" formControlName="tooltip">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="outline">
+            <mat-label>Answer Type</mat-label>
+            <mat-select #ansTypeSelect formControlName="answerType">
+                <mat-option value="text">Alpha Numerals</mat-option>
+                <mat-option value="number">Numbers</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="outline" *ngIf="qnDetails.value.answerType==='text'">
+            <mat-label>Maximum Length of Input</mat-label>
+            <input matInput placeholder="Maximum Length of Input" type="number" formControlName="maxlength">
+        </mat-form-field>
+        <div *ngIf="qnDetails.value.answerType==='number'">
+            <mat-form-field appearance="outline" class="outline" style="width: 50%;display: inline-flex;">
+                <mat-label>Minimum Value Allowed</mat-label>
+                <input matInput placeholder="Minimum Value Allowed" type="number" formControlName="minValue">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="outline" style="width: 50%;">
+                <mat-label>Maximum Value Allowed</mat-label>
+                <input matInput placeholder="Maximum Value Allowed" type="number" formControlName="maxValue">
+            </mat-form-field>
+        </div>
+    </div>
+    <div align="center">
+    <button mat-button (click)="submit()">Submit</button>
+</div>
+</form>

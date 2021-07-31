@@ -1,0 +1,90 @@
+<div class="createuser-container">
+    <div class="side-access col-md-2 col-sm-2">
+        <mat-card class="navlist">
+            <div class="center-align">
+                <mat-icon >admin_panel_settings</mat-icon>
+            </div>
+            <div>
+                <button class="navIcon" [class.active]="ph===true" (click)="toggelePH()" mat-button>Performance
+                    Head</button>
+            </div>
+            <div >
+                <button class="navIcon" [class.active]="pl===true" (click)="toggelePL()" mat-button>Performance
+                    Lead</button>
+            </div>
+            <div class="center-align">
+                <mat-icon>person_add</mat-icon>
+            </div>
+            <div class="center-align">
+                <button class="navIcon"  [class.active]="create===true" (click)="createUser()" mat-button>Create User</button>
+            </div>
+        </mat-card>
+    </div>
+    <div class="main col-md-10 col-sm-10">
+        <mat-card class="card">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h3 class="title">
+                                <span *ngIf="ph">Performance Head</span>
+                                <span *ngIf="pl">Performance Lead</span>
+                            </h3>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="search-box">
+                                <input type="text" (keyup)="applyFilter($event.target.value)" class="form-control"
+                                    placeholder="Search...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="example-container full-width-table">
+                    <table mat-table [dataSource]="userSource">
+
+                        <ng-container matColumnDef="s.no">
+                            <th mat-header-cell *matHeaderCellDef width="200"> Serial No. </th>
+                            <td mat-cell *matCellDef="let element;let i=index"> {{i+1}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Username">
+                            <th mat-header-cell *matHeaderCellDef width="300">Username </th>
+                            <td mat-cell *matCellDef="let element;let i=index"> {{element.username}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Email">
+                            <th mat-header-cell *matHeaderCellDef width="400"> Email </th>
+                            <td mat-cell *matCellDef="let element;let i=index"> {{element.email}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Designation">
+                            <th mat-header-cell *matHeaderCellDef width="400"> Designation</th>
+                            <td mat-cell *matCellDef="let element;let i=index"> {{element.designation}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Admin Status">
+                            <th mat-header-cell *matHeaderCellDef width="400"> Admin Status</th>
+                            <td mat-cell *matCellDef="let element;let i=index"> {{element.admin_status}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Actions">
+                            <th mat-header-cell *matHeaderCellDef width="400"> Actions </th>
+                            <td mat-cell *matCellDef="let element;let i=index">
+                                <button mat-icon-button matTooltip="Edit Tester" (click)="editUser(element)">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button matTooltip="Delete Tester"
+                                    (click)="deleteUser(element)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="dataColumns sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: dataColumns;" class="example-element-row"></tr>
+                    </table>
+                </div>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5, 15, 100]" class="mat-paginator-sticky"></mat-paginator>
+        </mat-card>
+    </div>
+</div>

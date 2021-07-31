@@ -1,0 +1,174 @@
+.toolbar {
+    align-items: center;
+    color: white;
+    font-weight: 400;
+  }
+
+  .toolbar img {
+    margin: 5px 15px 5px 5px;
+  }
+
+  .toolbar #twitter-logo {
+    height: 40px;
+    margin: 0 16px;
+  }
+  .menu{
+    color:honeydew;position: relative;font-size: small;
+    margin-right: 1%;
+  }
+
+  .toolbar #twitter-logo:hover {
+    opacity: 0.8;
+  } 
+  .mat-toolbar {
+    background: none !important;
+    color: rgba(0,0,0,.87);
+}
+.mat-toolbar-row, .mat-toolbar-single-row {
+    height: 40px !important;
+    padding: 0em;
+}
+
+  .white{
+    color: white;
+  }
+  .btn{
+    border-color: black;
+    color: black !important;
+  }
+  .btn:hover{
+    border-color: gray;
+    color: white !important;
+    background-color: rgb(44, 43, 43);
+  }
+  @media (min-width: 800px) and (max-width: 850px) {
+          .navbar:not(.top-nav-collapse) {
+            background-color: rgba(14, 14, 14, 0.9) !important;
+          }
+         
+      }
+.view,body,html{height:100%}
+
+.navbar{
+    background-color: rgba(14, 14, 14, 0.9) !important;
+    padding: .0em !important;
+}
+.top-nav-collapse
+{background-color:#1C2331;
+}
+@media only screen and (max-width:768px)
+{
+     .navbar[_ngcontent-ibu-c1] {
+        /* FONT-WEIGHT: 100; */
+        background-color: rgba(14, 14, 14, 0.9) !important;
+        height: 60px;
+    }
+
+}
+.example-icon {
+    padding: 0 14px;
+  }
+  .example-spacer1 {
+    flex: 0.007 0.007 auto;
+  }
+  .example-spacer2 {
+    flex: 1 1 auto;
+  }
+  .logo{
+      color: white;
+    left: -.9em;
+    position: relative;
+  }
+
+      
+.example-container {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .sidenav .mat-toolbar {
+    background: inherit;
+  
+  }
+  
+  .nav-icons{
+    color: white; font-size: 30px;
+  }
+  .example-sidenav {
+    /* display: flex; */
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    /* height: auto; */
+    background:rgba(14, 14, 14, 10)
+  }
+  #sidenav{
+    /* padding:0 12px;  */
+    /* flex: -1 -1 auto; */
+    font-size: 12px;
+    /* width: 50% !important ; */
+    height: 50px;
+  
+  }
+  #sidenav:hover,.active{
+    background-color: rgb(88, 2, 55);
+    /* box-shadow: 0 5px 15px rgba(196, 248, 162, 0.795); */
+  }
+.example-container
+  .mat-button, .mat-flat-button, .mat-icon-button, .mat-stroked-button {
+    box-sizing: border-box;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    outline: 0;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    vertical-align: baseline;
+    text-align: center;
+    margin: 0px;
+    min-width: 38px !important;
+    width: 38px !important;
+    line-height: 36px;
+    padding: 0 1px;
+    border-radius: 4px;
+    overflow: visible;
+}
+  .mat-stroked-button:not([disabled]) {
+    border-color: transparent !important;
+}
+  .copy{
+    font-size: 15px;
+    text-align: left;
+   }
+   .example{
+          font-size: 15px;
+          flex: 1 1 auto ;
+        text-align: right;
+   }
+   .log{
+       text-align: right;
+   }
+   #menubutton{
+     color: white;
+   }
+.background{
+    margin-top: 0px;
+    top:0;
+    background-color: rgb(214, 213, 214);
+}
+.settings{
+  /* left: .5em; */
+  position: relative;
+}
+.navbar .mat-button{
+  padding: 0px !important;
+}

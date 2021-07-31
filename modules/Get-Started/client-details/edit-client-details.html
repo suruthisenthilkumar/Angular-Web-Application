@@ -1,0 +1,92 @@
+<div style="padding-top: 2%; background-color: rgb(44, 43, 43)" class="center-align">
+    <h4 style="color: white;"class="popup-title">EDIT CLIENT DETAILS</h4>
+  </div>
+    <!-- <hr class="hr"> -->
+    <br>
+  <div class="content">
+  <form [formGroup]="firstFormGroup" class="example-form">
+  <mat-form-field class="example-full-width">
+    <input matInput maxlength="150" placeholder="Client Name" formControlName="Clientname" [readonly]="editable" required >
+  </mat-form-field><br>
+  <mat-form-field class="example-full-width" >
+    <input matInput maxlength="150" placeholder="Email ID " formControlName="Email" required [readonly]="editable" >
+  </mat-form-field><br>
+  <mat-form-field class="example-full-width">
+      <input matInput maxlength="150" placeholder="Project Name" formControlName="Prjname"  [readonly]="editable" required>
+  </mat-form-field><br>
+  <mat-form-field class="example-full-width">
+      <input matInput maxlength="150" placeholder="Requester Name" formControlName="Rqstername"[readonly]="editable"  required>
+   </mat-form-field><br>
+  <mat-form-field class="example-full-width">
+      <input matInput maxlength="150" placeholder="Cluster Head DLT" formControlName="Clusterhead" [readonly]="editable"  required>
+  </mat-form-field><br>
+  <mat-form-field class="example-full-width">
+        <input matInput maxlength="150" placeholder="Geography" formControlName="Geo" [readonly]="editable"  required>
+      <!-- </mat-select> -->
+    </mat-form-field><br>
+  <mat-form-field class="example-full-width">
+      <input matInput maxlength="150" placeholder="DLT 2 Name" formControlName="Dlt2" [readonly]="editable"  required>
+  </mat-form-field><br>
+  <div *ngIf="!sme">
+    <mat-form-field class="example-full-width" >
+      <mat-label>Billability</mat-label>
+    <mat-select formControlName="commstatus" required  >
+      <mat-option value="Bill to Company">Bill to Company</mat-option>
+      <mat-option value="Invoice to Client">Invoice to Client</mat-option>
+      </mat-select>
+    </mat-form-field><br>
+  </div>
+  <mat-form-field class="example-full-width">
+    <mat-label>Project Type</mat-label>
+  <mat-select formControlName="projectType"required>
+    <mat-option value="Existing Project">Existing Project</mat-option>
+    <mat-option value="New Project">New Project</mat-option>
+  </mat-select>
+  </mat-form-field>
+  <div  *ngIf="ph">
+    <mat-form-field class="example-full-width">
+    <input matInput placeholder="Existing Project Billing Status" formControlName="project_billing" required>
+  </mat-form-field><br>
+  </div>
+  <div  *ngIf="!sme">
+    <mat-form-field class="example-full-width">
+      <!-- <input matInput placeholder="JO Status" formControlName="JOstatus" required> -->
+      <mat-label>JO Status</mat-label>
+      <mat-select formControlName="JOstatus"required disableOptionCentering>
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="Submitted">Submitted</mat-option>
+          <mat-option value="Signed">Signed</mat-option>
+      </mat-select>
+  </mat-form-field><br>
+  </div>
+ <div *ngIf="!sme">
+  <mat-form-field style="width: 18%;"  >
+    <mat-label>Currency</mat-label>
+  <mat-select formControlName='symbol' required> 
+    <mat-option *ngFor="let currency of currencies" [value]="currency.value" >
+      {{currency.viewValue}}
+    </mat-option>
+  </mat-select>
+  </mat-form-field>&nbsp;&nbsp;
+  <mat-form-field style="width: 79%;"  *ngIf="!sme">
+      <input matInput placeholder="JO Value" formControlName="JOvalue" (input)="validateNumber($event.target.value)" required>
+      <mat-hint *ngIf="!decimalErr">Please enter upto two decimal places</mat-hint>
+      <mat-hint style="font-size: 11px;color:red;display: flex;justify-content: center;" *ngIf="decimalErr">Please enter a correct JO Value</mat-hint>
+  </mat-form-field><br>
+ </div>
+  <div  *ngIf="!sme">
+    <mat-form-field class="example-full-width" >
+      <input matInput maxlength="150" placeholder='JO value in USD'formControlName="newJovalue" >
+      <span matPrefix>$&nbsp;</span>
+     </mat-form-field>
+     
+  </div>
+  </form><br>
+  </div>
+  <div class="center-align"> 
+  <button *ngIf="!sme&&!editable" mat-raised-button (click)="done=!done"  (click)="updateClientInfo()" id="btndisable" [disabled]="!firstFormGroup.valid||decimalErr||done"  >Update</button>
+  <button  mat-button (click)="close()" cdkFocusInitial >Cancel</button>  </div>
+   
+   <!-- Copyright 2018 Google Inc. All Rights Reserved.
+       Use of this source code is governed by an MIT-style license that
+       can be found in the LICENSE file at http://angular.io/license -->

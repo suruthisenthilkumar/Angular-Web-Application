@@ -1,0 +1,144 @@
+<mat-tab-group mat-stretch-tabs>
+    <mat-tab label="RFI Details">
+      <ng-template matTabContent>
+<mat-card class="maincard" >
+   
+    <div class="container" >
+        <div class="table-wrapper" >
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8">
+                      <h3 class="title" *ngIf='isLive'>Live Projects And Status</h3>
+                      <h3 class="title" *ngIf='!isLive'>Signed Off Projects</h3>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="search-box">
+                            <input type="text" (keyup)="applyFilter($event.target.value)" class="form-control" placeholder="Search..." >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="example-container full-width-table">
+                <table mat-table [dataSource]="DataSource">
+                 <ng-container matColumnDef="request_id">
+                   <th mat-header-cell *matHeaderCellDef width="200"> Req.ID </th>
+                   <td mat-cell *matCellDef="let element"> {{element.request_id}} </td>
+                 </ng-container>
+
+                 <ng-container matColumnDef="requester_name">
+                  <th mat-header-cell *matHeaderCellDef width="300"> Requester Name </th>
+                  <td mat-cell *matCellDef="let element; let i=index" > {{element.requester_name}} </td>
+                </ng-container>
+               
+                 <ng-container matColumnDef="name">
+                   <th mat-header-cell *matHeaderCellDef width="300"> Client Name </th>
+                   <td mat-cell *matCellDef="let element;let i=index" > {{element.client_name}} </td>
+                 </ng-container>
+         
+                 <ng-container matColumnDef="email">
+                   <th mat-header-cell *matHeaderCellDef width="400"> Email </th>
+                   <td mat-cell *matCellDef="let element;let i=index" > {{element.email}} </td>
+                </ng-container>
+         
+                 <ng-container matColumnDef="project_name">
+                   <th mat-header-cell *matHeaderCellDef width="300"> Project Name </th>
+                   <td mat-cell *matCellDef="let element;let i=index" > {{element.project_name}} </td>
+                 </ng-container>
+         
+                 <ng-container matColumnDef="project_status">
+                     <th mat-header-cell *matHeaderCellDef width="400"> Project Status </th>
+                    <td mat-cell *matCellDef="let element" >
+                    <div *ngIf="element.project_status==null?false:true"> {{element.project_status}} </div> 
+                    <div *ngIf="element.project_status==null?true:false"><span style="font-size: smaller!important;color: red!important;font-style: italic;">Pending</span> </div>
+                    </td>
+                   </ng-container>
+         
+                 <ng-container matColumnDef="project_status_update">
+                       <th mat-header-cell *matHeaderCellDef width="300"> Status Update </th>
+                       <td mat-cell *matCellDef="let element;let i=index"><button  mat-icon-button color="white" (click)="clickStopper($event)" (click)="updateStatus(element.request_id)" ><i class="material-icons">update</i> </button> </td>
+                 </ng-container>
+         
+                 <ng-container matColumnDef="tester">
+                     <th mat-header-cell *matHeaderCellDef width="300"> Testers </th>
+                     <td mat-cell *matCellDef="let element;let i=index">
+                         <div *ngIf="element.tester==null?false:true"> {{element.tester}} </div> 
+                         <div *ngIf="element.tester==null?true:false"><span style="font-size: smaller!important;color: red!important;font-style: italic;">Unassigned</span></div>
+                     </td>
+               </ng-container>
+         
+                 <ng-container matColumnDef="assign_Tester" >
+                     <th mat-header-cell *matHeaderCellDef width="300"> Assign Tester </th>
+                     <td mat-cell *matCellDef="let element;let i=index"><button mat-icon-button color="white" (click)="clickStopper($event)"  (click)="assignTester(element.request_id,element.tester)" ><i class="material-icons">people_alt</i><span style="color:rgb(15, 15, 15)"> </span> </button> </td>
+                </ng-container> 
+         
+                 <ng-container matColumnDef="sign_off">
+                  <th mat-header-cell *matHeaderCellDef width="100"> Sign Off </th>
+                  <td mat-cell *matCellDef="let element;let i=index">
+                    <div *ngIf="element.signed_off!=null; else elseblock"> {{element.signed_off}}
+                    </div>
+                    <ng-template #elseblock>
+                      <button mat-icon-button matTooltip="Sign Off Project" [disabled]='element.signed_off!=null' (click)="clickStopper($event)" 
+                        (click)="signoff(element.request_id )"><img src="assets\images\off.svg" width="19px">
+                      </button>
+                    </ng-template>
+                  
+                  </td>
+                </ng-container>
+                 <ng-container matColumnDef="action"> 
+                  <th mat-header-cell *matHeaderCellDef width="400"> Actions </th>   
+                  <td mat-cell *matCellDef="let element let i=index">
+                      <button mat-icon-button matTooltip="View RFI" (click)="clickStopper($event)"  (click)="viewRFI(element.request_id,element.rfi_type)" *appUserRole="[Role.Manager,Role.Guest]"><i class="material-icons">remove_red_eye</i></button>
+                      <span  matTooltip="RFI information can no longer be edited" *ngIf="!(element.project_status==='Initial Enquiry' || element.project_status==='Proposal Creation - In Progress' || element.project_status==='RFI Submitted' || element.project_status==='pending' );else Edit">
+                        <button mat-icon-button [disabled]="true" ><mat-icon svgIcon="edit"></mat-icon></button>
+                      </span>
+                      <ng-template #Edit><button mat-icon-button matTooltip="RFI information can be edited till the status is 'Proposal Sent'" (click)="clickStopper($event)" (click)="editRFI(element.request_id)">
+                        <mat-icon svgIcon="edit"></mat-icon>
+                      </button></ng-template>
+                      <button mat-icon-button matTooltip="Sign Off Project" [disabled]='element.signed_off!=null'  (click)="clickStopper($event)"   (click)="signoff(element.request_id )"><i class="material-icons">check</i></button>                      
+                  </td>
+            </ng-container>
+            <ng-container matColumnDef="Commercial_status">
+              <th mat-header-cell *matHeaderCellDef width="300"> Billability </th>
+              <td mat-cell *matCellDef="let element;let i=index" > {{element.commercial_status}} </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="project_type">
+              <th mat-header-cell *matHeaderCellDef width="300"> Project Type </th>
+              <td mat-cell *matCellDef="let element;let i=index" > {{element.project_type}} </td>
+            </ng-container>
+               
+                 <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
+                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"  (click)="viewRFI(row.request_id,row.rfi_type)" class="example-element-row"></tr>
+                 
+               </table>
+
+               <div *ngIf="noData||errorData" class="no-records">
+                  <span *ngIf="noData"> No Records Are Found!!</span>
+                  <span *ngIf="errorData">Error While Retrieving Data !!!</span>
+                  <span *ngIf="nomatch"> No results match your search!!</span>
+              </div>
+         </div>
+        
+        </div>
+    <mat-paginator [pageSizeOptions]="[8, 25, 100]" class="mat-paginator-sticky"></mat-paginator>
+    </div>
+</mat-card>
+<div class="fixed-action-btn smooth-scroll" >
+  <a class="fixed-plugin red" (click)='dataSwitch("switch")' 
+  [matTooltip]='!isLive? "Live Projects":"Signed-Off Projects"'>
+    <mat-icon class="btn" >{{!isLive ? 'layers' : 'layers_clear'}}</mat-icon>
+  </a>
+</div>
+</ng-template>
+</mat-tab>
+<mat-tab label="Client Details">
+  <ng-template matTabContent>
+    <client-details></client-details>
+  </ng-template>
+  </mat-tab>
+  <mat-tab label="SME Details" *appUserRole='[Role.PH,Role.PL,Role.Admin]'>
+      <ng-template matTabContent>
+   <tester-details></tester-details>
+</ng-template>
+    </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,168 @@
+<form [formGroup]="rfiFormGroup">
+
+<mat-horizontal-stepper #stepper class="Stepper" style="background:transparent !important;">
+
+  <div *ngFor="let formType of displayTable;" >
+
+<mat-step [stepControl]="formType.fg" >
+<form [formGroupName]="formType.fg" >
+  <ng-template matStepLabel>{{formType.name}}</ng-template>
+  <mat-card class="Sub-card" *ngIf="loaded">
+    <div *ngIf="formType.type==='singleForm';else multi">
+    <div *ngFor="let ques of formType.subarray;">
+      <div *ngIf="ques.details.answerType==='text'" [formGroupName]='ques.id'>
+        <mat-form-field appearance="legacy" style="width: 100%;">
+          <mat-label>{{ques.questions}} </mat-label>
+          <mat-icon matSuffix [matTooltip]='ques.details.tooltip' matTooltipPosition="left">not_listed_location
+          </mat-icon>
+          <input matInput [type]='ques.details.inputType' [maxlength]="ques.details.maxlength"
+            formControlName='value' required>
+          <mat-error *ngIf="ques.details.inputType==='number'">
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngFor="let ques of  formType.subarray;let i=index">
+      <div *ngIf="ques.details.answerType==='radio'" [formGroupName]='ques.id'>
+        <mat-label class="col-float1">{{ques.questions}}</mat-label>
+        <mat-radio-group class="col-float2" formControlName='value' style="padding-left: 2%" required>
+          <mat-radio-button *ngFor='let option of ques.details["sub-options"].value;' [value]="option">
+            {{option | titlecase }}
+          </mat-radio-button>&nbsp;
+        </mat-radio-group>
+      </div>
+    </div>
+    <div *ngFor="let ques of  formType.subarray;let i=index">
+      <div *ngIf="ques.details.answerType==='radioGroup'" [formGroupName]='ques.id'>
+        <div formGroupName='value'>
+          <mat-label class="col-float1">{{ques.questions}}</mat-label>
+          <mat-radio-group class="col-float2" #group="matRadioGroup"  (change)="radioGroupChange(formType.fg,ques.id)"  formControlName="radioValue"
+            style="padding-left: 2%" required>
+            <mat-radio-button value="yes">Yes</mat-radio-button>
+            <mat-radio-button value="No">No</mat-radio-button>
+          </mat-radio-group>
+          <div *ngIf="group.value === ques.details.entryValue;else elseBlock">
+            <mat-form-field style="width: 100%;" appearance="standard">
+              <input matInput [maxlength]="ques.details.maxlength" 
+                [placeholder]="ques.details.entryValuePlaceholder" formControlName="entryValue">
+              <mat-icon matSuffix [matTooltip]="ques.details.tooltip" matTooltipPosition="left">
+                not_listed_location</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <ng-template #elseBlock><br>
+          <div><br></div>
+        </ng-template>
+      </div>
+    </div><br><br>
+    <div *ngFor="let ques of  formType.subarray;let i=index">
+      <div *ngIf="ques.details.answerType==='textarea'" [formGroupName]='ques.id'>
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>{{ques.questions}}</mat-label>
+          <textarea matInput rows="5" formControlName="value"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <ng-template #multi>
+    <!-- <span class="example-header">Choose the options and fill the Details.</span> -->
+    <form [formGroup]="checkboxGroup" style="justify-content: center;display: flex;">
+      <mat-checkbox class="example-margin" formControlName="LoadBalancerDetails">Load Balancer
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" formControlName='ApplicationServerDetails'>
+        Application Server</mat-checkbox>
+      <mat-checkbox class="example-margin" formControlName='webServerDetails'>Web Server
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" formControlName='DatabaseServerConfiguration'>Database
+        Server</mat-checkbox>
+    </form>
+    <div *ngFor="let type of formType.subarray" >
+      <form [formGroupName]='type.fg'
+        *ngIf="type.boolean==='check'?checkboxGroup.controls[type.fg].value:true">
+        <div class="example-container">
+          <mat-divider></mat-divider><br>
+          <span style="display: flex;justify-content: center;font-size: 17px;">{{type.name}}
+          </span>
+          <div *ngFor="let ques of type.subarray;let i=index">
+            <div *ngIf="ques.details.answerType==='text'" [formGroupName]='ques.id'>
+              <mat-form-field appearance="legacy" style="width: 100%;">
+                <mat-label>{{ques.questions}} </mat-label>
+                <mat-icon matSuffix [matTooltip]='ques.details.tooltip' matTooltipPosition="left">
+                  not_listed_location
+                </mat-icon>
+                <input matInput [type]='ques.details.inputType' [maxlength]="ques.details.maxlength"
+                  formControlName='value' required>
+                <mat-error *ngIf="ques.details.inputType==='number'">
+                  <span
+                    *ngIf="this.rfiFormGroup.get(type.fg)[ques.id]['value'].errors">Invalid
+                    Input</span>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngFor="let ques of type.subarray;let i=index">
+            <div *ngIf="ques.details.answerType==='radio'" [formGroupName]='ques.id'>
+              <mat-label class="col-float1">{{ques.questions}}</mat-label>
+              <mat-radio-group class="col-float2" formControlName='value' style="padding-left: 2%" required>
+                <mat-radio-button *ngFor='let option of ques.details["sub-options"].value;' [value]="option">
+                  {{option | titlecase }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div> 
+          <div *ngFor="let ques of type.subarray;let i=index"> 
+            <div *ngIf="ques.details.answerType==='radioGroup'" [formGroupName]='ques.id'>
+              <div formGroupName='value'>
+                <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                <mat-radio-group name="radioOpt1" class="col-float2" #group="matRadioGroup" (change)="radioChange(type.fg,ques.id)" formControlName="radioValue"
+                  style="padding-left: 2%" required>
+                  <mat-radio-button value="yes">Yes</mat-radio-button>
+                  <mat-radio-button value="No">No</mat-radio-button>
+                </mat-radio-group>
+                <div *ngIf="group.value === ques.details.entryValue;else elseBlock">
+                  <mat-form-field style="width: 100%;" appearance="standard">
+                    <input matInput [maxlength]="ques.details.maxlength" 
+                      [placeholder]="ques.details.entryValuePlaceholder" formControlName="entryValue">
+                    <mat-icon matSuffix [matTooltip]="ques.details.tooltip" matTooltipPosition="left">
+                      not_listed_location</mat-icon>
+                  </mat-form-field>
+                </div>
+              </div>
+              <ng-template #elseBlock><br>
+                <div><br></div>
+              </ng-template>
+            </div>
+          </div>
+          <div *ngFor="let ques of type.subarray;let i=index">
+            <div *ngIf="ques.details.answerType==='textarea'" [formGroupName]='ques.id'>
+              <mat-form-field appearance="fill" style="width: 100%;">
+                <mat-label>{{ques.questions}}</mat-label>
+                <textarea matInput rows="5" formControlName="value"></textarea>
+              </mat-form-field>
+            </div>
+          </div> 
+        </div>
+      </form>
+    </div>
+  </ng-template>
+    <div class="text-center">
+      <button mat-button matStepperNext id="btndisable"
+        style="background-color: navy;color:white;float: right;display:flex;" >Update</button><br><br>
+    </div> 
+  </mat-card>
+</form>
+</mat-step> 
+</div>
+</mat-horizontal-stepper>
+</form>
+
+<div>
+    <a class="fixed-plugin red" mat-dialog-close matTooltip='Go Back'>
+      <mat-icon class="btn" >close</mat-icon>
+    </a>
+  </div>
+  <div >
+    <a class="fixed2 red" (click)="onSubmit()" matTooltip='Save changes'>
+      <mat-icon class="btn"  >save</mat-icon>
+    </a>
+  </div>

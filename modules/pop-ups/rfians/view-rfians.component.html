@@ -1,0 +1,38 @@
+
+<nav class="nav nav-pills nav-fill" style="padding-top: 20px;">
+    <button mat-button class="nav-item" [class.active]="isActive('tab1')" id="tab1" *ngIf="general" (click)="open('tab1')">General Questionnaire</button>
+    <button mat-button class="nav-item" [class.active]="isActive('tab2')" id="tab2"  *ngIf="tech" (click)="open('tab2')">Technical Questionnaire</button>
+    <button mat-button class="nav-item" [class.active]="isActive('tab3')" id="tab3"  *ngIf="eut" (click)="open('tab3')" >EUT Server Questionnaire</button>
+    <!-- <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button> -->
+</nav>
+
+  <!-- <div class="tab-content"> -->
+    <div class="tab-pane">
+      <div *ngFor="let table of displayTable">
+        <div *ngIf="table.answers.length>0">
+        <span class="table-title" *ngIf="displayTable.length>1">{{table.name}} </span>
+        <table mat-table [dataSource]="table.answers" >
+            <ng-container matColumnDef="questions">
+              <th mat-header-cell *matHeaderCellDef width="500"> Questions  </th>
+              <td mat-cell *matCellDef="let element"> {{element.questions}} </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="answers">
+              <th mat-header-cell *matHeaderCellDef width="200"> Answers </th>
+              <td mat-cell *matCellDef="let element"> {{element.answers}} </td>
+           </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+    </table>
+    <hr class="hr">
+
+  </div>
+  </div>
+  </div>
+  <div>
+    <a class="fixed-plugin red" mat-dialog-close matTooltip='Go Back'>
+      <mat-icon class="btn" >close</mat-icon>
+    </a>
+  </div>

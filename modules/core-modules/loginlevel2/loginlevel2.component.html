@@ -1,0 +1,51 @@
+
+
+
+<div class="view" style="background-repeat: no-repeat; background-size: cover; background-position: center center;">
+       <div class="mask rgba-gradient align-items-center">
+         <div class="container">
+           <div class="row mt-0" style="justify-content: center;display: flex;">
+             <div class="col-md-6 col-xl-5 mb-4">
+             <div class="card wow fadeInRight">
+
+                <h5 class="card-header info-color white-text text-center py-4">
+                  <strong>Hi {{user}}</strong>
+                </h5>
+                <!--Card content-->
+                <div class="card-body px-lg-5 pt-0">
+                    <span class="text-center py-3" style="font-size: 18px;display: flex;justify-content: center;">
+                        <strong>Welcome</strong> 
+                    </span> 
+                  <!-- Form -->
+                  <form>
+                  <div class="text-center PwdOutline" style="color: #757575;" action="#!">
+                    <br>
+                    <!-- Password -->
+                    <mat-form-field  appearance="outline" class="example-full-width ">
+                        <mat-icon matPrefix><i class="material-icons">https</i></mat-icon>
+                        <mat-label>Enter your Password</mat-label>
+                        <input matInput maxlength="50" [type]="hide ? 'password' : 'text'" [(ngModel)]="user_password"  name="password" passwordToggle required>
+                        <mat-icon matSuffix (click)="hide = !hide" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field><br><br>
+                    <mat-error *ngIf='error' class="alert alert-warning">{{errorAlert}}</mat-error>
+
+                    <!-- Sign in button -->
+                    <br>
+                    <button class="submitBtn" type="submit" (click)="signin()">Login</button>
+                    <hr class="hr-light mb-3 mt-4">
+                    <button id="" mat-icon-button><mat-icon>keyboard_backspace</mat-icon> Back</button>
+                    
+              
+                </div>
+              </form>
+                  <!-- Form -->
+                </div>
+              
+              </div>
+            </div> 
+           </div>
+         </div>
+       </div>
+     </div>
+
+ 

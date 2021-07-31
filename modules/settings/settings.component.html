@@ -1,0 +1,74 @@
+<mat-tab-group mat-stretch-tabs  > 
+    <mat-tab label="Configuration Settings">
+      <ng-template matTabContent>
+      <div class="card-container">
+      <mat-card class="box" [style.margin-top]="disable?'2%':'5%'">
+        <br>
+        <mat-card-header style="display: flex;position: sticky; justify-content: center; font-size:25px !important;" >
+          <mat-card-title>Please Enter Details:</mat-card-title>
+        </mat-card-header>
+        <form [formGroup]="configDetails" class="form">
+          <mat-card-content >
+            <mat-form-field class="example-full-width">
+                <input matInput  placeholder="Gsac Email" name="Email" type="text" formControlName="gsacmail"  required [(ngModel)]="gsacmail"  [pattern]="emailPattern">
+                <mat-error *ngIf="configDetails.controls.gsacmail.errors?.required">Email is required</mat-error> 
+                <mat-error *ngIf="configDetails.controls.gsacmail.errors?.pattern">Email is not valid</mat-error> 
+            </mat-form-field>
+            <br>
+            <div *ngIf='disable'><mat-form-field class="example-full-width" >
+                <input matInput placeholder="Old Password" [type]="hide ? 'password' : 'text'" name="password" type="text" formControlName="oldpass"  required>
+                <button mat-icon-button matTooltip="Show/Hide" matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon></button>
+                <mat-error *ngIf="configDetails.controls.oldpass.errors?.required">Old Password is required</mat-error> 
+            </mat-form-field>
+            <br></div>
+            <mat-form-field  class="example-full-width">
+              <input matInput [placeholder]="disable?'New Password':'Password'" [type]="hide1 ? 'password' : 'text'"name="newpassword" [(ngModel)]="gsacpass" formControlName="gsacmailpass" [pattern]="passpattern"  passwordToggle required [errorStateMatcher]="matcher">
+              <button *ngIf="disable" mat-icon-button matTooltip="Show/Hide" matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+              <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-hint *ngIf='disable'>*Password should be alphanumeric with minimum 8 characters and must also contain a special character.</mat-hint>
+                <mat-error *ngIf="configDetails.controls.gsacmailpass.errors?.minlength">Password is too short</mat-error>
+                <mat-error *ngIf="configDetails.controls.gsacmailpass.errors?.pattern">Password must be alphanumeric and contain atleast one special characters</mat-error>
+            </mat-form-field>
+            <span *ngIf='disable'><br><br></span>
+            <mat-form-field  class="example-full-width" *ngIf='disable'>
+              <input matInput placeholder="Confirm password" [type]="hide2 ? 'password' : 'text'" formControlName="gsac_confirm_password" required [errorStateMatcher]="confirmPassMatcher">
+              <button *ngIf="disable" mat-icon-button matTooltip="Show/Hide" matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide" >
+              <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="configDetails.hasError('passwordsDoNotMatch')">Passwords do not match</mat-error>  
+            </mat-form-field>
+            <br>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Security Head Email" name="Email" type="text" formControlName="managermail" [(ngModel)]="managermail" required  [pattern]="emailPattern">
+              <mat-error *ngIf="configDetails.controls.managermail.errors?.required">Email is required</mat-error> 
+              <mat-error *ngIf="configDetails.controls.managermail.errors?.pattern">Email is not valid</mat-error> 
+            </mat-form-field>
+        </mat-card-content>
+        </form>
+        <br>
+        <div style="display: flex; justify-content: center;" > 
+        <button mat-raised-button   (click)="edit()" >Edit</button> &nbsp;&nbsp;&nbsp;
+        <button mat-raised-button  id="btndisable" (click)="store()" [disabled]='!configDetails.valid'>Update</button>
+        </div>
+        <br>
+        <mat-error *ngIf='done' style="color: green;display: flex; justify-content: center;" class="alert alert-info col">{{message}}</mat-error>
+        <mat-error *ngIf='done2' style="display: flex; justify-content: center;" class="alert alert-danger">{{message}}</mat-error>
+      </mat-card>
+  
+    </div>
+  </ng-template>
+  </mat-tab>
+  <mat-tab label="Create Users" *appUserRole="[Role.Admin,Role.PH,Role.PL]">
+    <ng-template matTabContent>
+          <create-user></create-user>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="RFI Questions" *appUserRole="[Role.Admin,Role.PH,Role.PL]">
+    <ng-template matTabContent>
+          <rfi-question></rfi-question>
+    </ng-template>
+  </mat-tab>
+  </mat-tab-group>
+  

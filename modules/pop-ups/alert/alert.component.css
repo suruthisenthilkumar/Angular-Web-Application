@@ -1,0 +1,19 @@
+::ng-deep .mat-dialog-container{
+  
+    background-color: white !important;
+  }
+  button{
+    width: 80px;
+    height: 35px;
+    font-size: small;
+  }
+
+  .cancel{
+    /* background-color: rgb(199, 10, 10,0.8);
+    color: white; */
+  }
+
+  .confirm{
+    background-color: rgb(124, 2, 77,0.8) !important;
+    color: white;
+  }

@@ -1,0 +1,65 @@
+.mat-toolbar{
+    background-color: rgb(102, 205, 170);
+}
+.box{
+    border-radius:50px;
+    width: 50%;
+    
+}
+:host /deep/ .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color:  rgb(124, 2, 77) !important;
+    /* width: 2px; */
+  }
+  :host /deep/ .mat-ink-bar {
+    position: absolute;
+    bottom: 0;
+    height: 2.5px !important;
+    transition: .5s cubic-bezier(.35,0,.25,1);
+    ;
+  }
+
+  :host /deep/ .mat-tab-label {
+    height: 38px !important;
+  }
+
+  :host /deep/ .mat-tab-label, .mat-tab-link {
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-weight: 500 !important;
+    color: black !important;
+  }
+
+
+.card-container1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    height: 100%;
+  }
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    /* margin-top: 60px; */
+  }
+.example-full-width{
+    width: 80%;
+    margin-left: 10%;
+    /* margin-right: 2%; */
+    
+}
+
+.form-field-dialog{
+    width: 40%; 
+ }
+
+ .maincard {
+    box-shadow: none;
+   background:transparent !important;
+   color: rgba(0,0,0,.87);
+   /* height: calc(100vh - 80px); */
+   width: 100%;
+   height: 100%;
+   box-sizing: border-box;
+}
+

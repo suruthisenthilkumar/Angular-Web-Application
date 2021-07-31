@@ -1,0 +1,24 @@
+<!-- <div style="padding-top: 2%; background-color: lightgrey;" class="center-align"> -->
+<div style="padding-top: 2%; background-color: rgb(44, 43, 43) " class="center-align">
+<h4 style="color: white;" class="popup-title">UPDATE PROJECT STATUS</h4></div>
+<hr class="hr"><br>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <label class="input-group-text " style="color: black; background-color: transparent; " for="inputGroupSelect01">Please select one of the options</label>
+    </div>
+    <select [(ngModel)]="data.status" [(ngModel)]="selectedValue"  id="inputGroupSelect01" class="custom-select">
+        <option *ngFor="let option of options" [value]="option.value">{{option.name}}</option>
+    </select>
+</div>
+  <div class="input-group" *ngIf="selectedValue==='Others'">
+    <div class="input-group-prepend">
+      <span class="input-group-text" style="color: black; background-color: transparent;">Enter The New Status</span>
+    </div>
+    <input type="text" [(ngModel)]="data.newStatus" class="form-control">
+  </div>
+  <br *ngIf="selectedValue==='Others'"><br *ngIf="selectedValue!='Others'">
+<div mat-dialog-actions class="center-align">
+  <hr class="hr">
+    <button mat-raised-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button  [disabled]='!selectedValue' [mat-dialog-close]="[data.status,data.newStatus]" cdkFocusInitial>Submit</button>
+  </div>

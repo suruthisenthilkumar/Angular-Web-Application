@@ -1,0 +1,62 @@
+<div class="center-card">
+    <mat-card class="Sub-card mat-elevation-z8" style="width: calc(100% - 450px) !important; margin-top: 1% !important;">
+      <mat-card-header style="justify-content: center;display: flex;font-size: 25px;">
+        <mat-card-title style="font-size: 25px;">Raise A New Request</mat-card-title>
+      </mat-card-header>
+      <div class="content">
+        <form [formGroup]="DetailsFormGroup">
+          <br>
+          <mat-form-field style="width: 60%;">
+            <input matInput maxlength="50" placeholder="Requester Name" formControlName="Rqstername" required>
+          </mat-form-field><br>
+          <mat-form-field style="width: 60%;">
+            <input matInput maxlength="50" placeholder="Project Name" formControlName="Prjname" required>
+          </mat-form-field><br>
+          <mat-form-field style="width: 18%;">
+            <mat-label>Currency</mat-label>
+            <mat-select formControlName='symbol'>
+              <mat-option *ngFor="let currency of currencies" [value]="currency.value" required>
+                {{currency.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>&nbsp;&nbsp;
+          <mat-form-field style="width: 40%;">
+            <input matInput placeholder="JO Value" formControlName="JOvalue" (input)="validateNumber($event.target.value)"
+              required>
+            <mat-hint *ngIf="!decimalErr">Please enter upto two decimal places</mat-hint>
+            <mat-hint style="font-size: 11px;color:red;display: flex;justify-content: center;" *ngIf="decimalErr">Please
+              enter a correct JO Value</mat-hint>
+          </mat-form-field><br>
+          <mat-form-field style="width: 60%;">
+            <mat-label>JO Status</mat-label>
+            <mat-select formControlName="JOstatus" required>
+              <mat-option value="Pending">Pending</mat-option>
+              <mat-option value="Submitted">Submitted</mat-option>
+              <mat-option value="Signed">Signed</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 60%;">
+            <mat-label>Project Type</mat-label>
+            <mat-select formControlName="projectType" required>
+              <mat-option value="Existing Project">Existing Project</mat-option>
+              <mat-option value="New Project">New Project</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field style="width: 60%;">
+            <mat-label>Billability</mat-label>
+            <mat-select formControlName="commstatus" required>
+              <mat-option value="Bill to Company">Bill to Company</mat-option>
+              <mat-option value="Invoice to Client">Invoice to Client</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+  
+      </div>
+      <div *ngIf='errormsg' style="display: flex; justify-content: center;">
+        <mat-error class="alert  alert-warning alert-dismissible fade show">{{message}}</mat-error>
+      </div>
+      <div style="text-align: center;">
+        <br> <button mat-button (click)='onSubmit()' id="btndisable" [disabled]="!DetailsFormGroup.valid" style="background-color: navy;color:white">Submit</button>
+      </div>
+    </mat-card>
+  </div>

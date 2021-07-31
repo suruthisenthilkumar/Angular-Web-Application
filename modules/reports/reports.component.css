@@ -1,0 +1,10 @@
+.mat-card{
+    margin: auto;
+    transition: transform .5s;  /* Animation Speed increase the value and feel the difference */
+}
+
+.mat-card:hover {
+    transform: scale(1.5); /* Zoom percentage (1.5=150% zoom)*/
+    box-shadow: 0 8px 8px 8px rgba(124, 123, 123, 0.2), 0 8px 8px 0 rgba(172, 171, 171, 0.14), 0 8px 8px 0 rgba(167, 166, 166, 0.12) !important;
+    transition: background .4s cubic-bezier(.25,.8,.25,1),box-shadow 280ms cubic-bezier(.4,0,.2,1);
+}

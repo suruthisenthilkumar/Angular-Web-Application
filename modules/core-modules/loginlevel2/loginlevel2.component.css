@@ -1,0 +1,58 @@
+.card{
+    margin-top: 25%;
+    background-image:url('..\..\..\..\assets\loginCardBG.jpg');
+    transition: all 0.4s ease-in-out;
+}
+.example-full-width{
+    width: 100%;
+    color: black;
+}
+.backbtn:hover{
+    color: black;
+}
+:host /deep/.mat-form-field-appearance-outline .mat-form-field-infix {
+    height: 45px !important;
+    padding: .3em 0 .5em 0 !important;
+    font-size: 14px !important; 
+  }
+  :host /deep/ .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+    text-align: left;
+    top: -19px !important;
+  }
+  input.mat-input-element {
+    margin-left: 2% !important;
+}
+  .PwdOutline ,.PwdOutline mat-label,mat-icon{
+    color: black;
+}
+.PwdOutline mat-label{
+    margin-left: 2%;
+}
+hr { 
+    color: black;
+    display: block;
+    border: 1.5px inset !important;
+    overflow: hidden;
+}
+.view {
+    background-image:url('..\..\..\..\assets\loginBG.jpg')  !important ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
+    background-size:cover; 
+    width:auto;
+    background-position:100% 100%;
+    margin-top: 0px;
+    min-height: 100%;
+    min-width: 320px;
+    width: 100%;
+    height: auto;}
+
+    ::ng-deep .errorBar{
+        background-color: rgba(245, 245, 245);
+        color: rgba(214, 19, 19, 0.781);
+        font-weight: 500;
+        font-size: medium;
+        justify-content: center;
+    }

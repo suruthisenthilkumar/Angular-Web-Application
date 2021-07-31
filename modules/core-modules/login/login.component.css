@@ -1,0 +1,91 @@
+.card{
+    margin-top: 15%;
+    background-image:url('..\..\..\..\assets\loginCardBG.jpg');
+}
+.example-full-width{
+    width: 100%;
+}
+:host /deep/ .mat-form-field-appearance-outline .mat-form-field-infix {
+    height: 45px !important;
+    padding: .3em 0 .5em 0;
+    font-size: 16px;
+  }
+  :host /deep/ .mat-form-field-hide-placeholder .mat-form-field-label-wrapper {
+    text-align: left;
+    top: -22px !important;
+  }
+.outline ,.outline mat-label{
+    color: black;
+}
+.outline mat-label{
+    margin-left: 2%;
+}
+input.mat-input-element {
+    margin-left: 2% !important;
+}
+.mat-select{
+    margin-left: 2% !important;
+}
+hr { 
+    color: black;
+    display: block;
+    border: 1.5px inset !important;
+    overflow: hidden;
+}
+.admin a,.user a{
+    color: #007bff;
+    font-weight: 450;
+    cursor: pointer;
+}
+.view {
+    background-image:url('..\..\..\..\assets\loginBG.jpg')  !important ;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
+    background-size:cover; 
+    width:auto;
+    background-position:100% 100%;
+    margin-top: 0px;
+    min-height: 100%;
+    min-width: 320px;
+    width: 100%;
+    height: auto;}
+
+::ng-deep .errorBar{
+    background-color: rgba(245, 245, 245);
+    color: rgba(214, 19, 19, 0.781);
+    font-weight: 500;
+    font-size: medium;
+    justify-content: center;
+}
+
+::ng-deep .successBar{
+    background-color: rgba(245, 245, 245,0.9);
+    color: rgb(11, 82, 4);
+    font-weight: 500;
+    font-size: medium;
+    justify-content: center;
+}
+::ng-deep .sheet{
+    background-color: transparent;
+}
+.bottom-sheet {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    background-color: rgb(182, 34, 17,0.8);
+    padding: 10px 20px;
+}
+.bottom-sheet div {
+    flex: 1;
+    color: white;
+}
+button.cancel {
+    margin-left: 5px;
+    color: rgb(209, 206, 206) !important;
+}
+button.change {
+    color: white !important;
+}

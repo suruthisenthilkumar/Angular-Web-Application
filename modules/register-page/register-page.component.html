@@ -1,0 +1,418 @@
+<div class="html">
+  <div class="toolbar" role="banner">
+    <span style="margin-left: 1%;">Portal</span>
+    <div class="spacer"></div>
+    <span style="margin-right: 2%;cursor: pointer;" (click)="goToLogin()" >Login?</span>
+  </div>
+
+  <mat-card class="Main-card">
+    <mat-horizontal-stepper [linear]="false" #stepper class="Stepper" style="background:transparent !important;">
+      <mat-step [stepControl]="basicInfo">
+        <ng-template matStepLabel>Project Details </ng-template>
+        <mat-card class="Sub-card">
+          <div class="content"><br><br>
+            <form [formGroup]="basicInfo">
+              <mat-form-field style="width: 60%;">
+                <input matInput placeholder="Email ID " formControlName="Email" required [pattern]="emailPattern">
+                <mat-error *ngIf="basicInfo.controls.Email.errors?.required">Email is required</mat-error>
+                <mat-error *ngIf="basicInfo.controls.Email.errors?.pattern">Email is not valid</mat-error>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="location" required>
+                  <mat-option *ngFor="let option of userLocation" [value]="option.id">{{option.value}}</mat-option>
+                </mat-select>
+              </mat-form-field><br>
+              <div *ngIf="!initialCheck">
+              <mat-form-field style="width: 60%;">
+                <input matInput placeholder="Project Name" formControlName="Prjname" required>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <input matInput placeholder="Requester Name" formControlName="Rqstername" required>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <input matInput placeholder="Cluster Head DLT" formControlName="Clusterhead" required>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <input matInput placeholder="DLT 2 Name" formControlName="Dlt2" required>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <mat-select placeholder="Geography" matInput formControlName="geography">
+                  <mat-option *ngFor="let option of geography" [value]="option">{{option}} </mat-option>
+                </mat-select>
+              </mat-form-field><br>
+              <mat-form-field style="width: 18%;">
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName='symbol'>
+                  <mat-option *ngFor="let currency of currencies" [value]="currency.value" required>
+                    {{currency.viewValue}} </mat-option>
+                </mat-select>
+              </mat-form-field>&nbsp;&nbsp;
+              <mat-form-field style="width: 40%;">
+                <input matInput placeholder="JO Value" formControlName="JOvalue"
+                  (input)="validateNumber($event.target.value)" required>
+                <mat-hint *ngIf="!decimalErr">Please enter upto two decimal places</mat-hint>
+                <mat-hint style="font-size: 11px;color:red;display: flex;justify-content: center;" *ngIf="decimalErr">
+                  Please enter a correct JO Value</mat-hint>
+              </mat-form-field><br>
+              <mat-form-field style="width: 60%;">
+                <mat-label>JO Status</mat-label>
+                <mat-select formControlName="JOstatus" required>
+                  <mat-option value="Pending">Pending</mat-option>
+                  <mat-option value="Submitted">Submitted</mat-option>
+                  <mat-option value="Signed">Signed</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="width: 60%;">
+                <mat-label>Project Type</mat-label>
+                <mat-select formControlName="projectType" required>
+                  <mat-option value="Existing Project">Existing Project</mat-option>
+                  <mat-option value="New Project">New Project</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field style="width: 60%;">
+                <mat-label>Billability</mat-label>
+                <mat-select formControlName="commstatus" required>
+                  <mat-option value="Bill to Company">Bill to Company</mat-option>
+                  <mat-option value="Invoice to Client">Invoice to Client</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            </form>
+            <span *ngIf="!initialCheck">
+              <label for="checkid" style="word-wrap:break-word">
+                <input id="checkid" style="font-size: 1.5ch;" [(ngModel)]="directSubmission" type="checkbox"
+                  value="test" />&nbsp;&nbsp; Do you want to finish the registration process now?
+              </label>
+            </span>
+          </div>
+          <p style="font-weight: bold;text-align: center;" *ngIf="directSubmission">
+            <i style="font-size: 1.5ch;">*Please download the <a
+                href=".\assets\files\PerformanceTesting_Questionnaire.xlsx"> RFI Details Document for your reference
+              </a> and submit the form.</i><br>
+          </p>
+
+          <div *ngIf='errormsg' style="display: flex; justify-content: center;">
+            <mat-error class="alert  alert-warning alert-dismissible fade show">
+              <strong>Warning!&nbsp;</strong>{{message}}&nbsp; <button type="button" class="close"
+                data-dismiss="alert">&times;</button></mat-error>
+          </div>
+          <div *ngIf='false' style="display: flex; justify-content: center;">
+            <mat-error class="alert  alert-info" style="color: green;"><strong>Success!&nbsp;</strong>Please wait your
+              request is being raised. &nbsp; <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </mat-error>
+          </div>
+          <div style="text-align: center;">
+            <button mat-button *ngIf="initialCheck" (click)="check()">Next</button>
+            <button mat-button matStepperNext id="btndisable" *ngIf="!directSubmission&&!initialCheck"
+              [disabled]="!this.basicInfo.valid" style="background-color: navy;color:white">Next</button>
+            <button mat-raised-button type="submit" id="btndisable" *ngIf="directSubmission"
+              (click)="onDirectSubmit()"
+              style="background-color: navy;color: white;">Submit</button>&nbsp;
+            <!-- [disabled]="disableSubmit||!this.firstFormGroup.valid"  -->
+
+          </div>
+        </mat-card>
+      </mat-step>
+
+      <mat-step [stepControl]="generalDetails" *ngIf="!directSubmission">
+        <form [formGroup]="generalDetails" *ngIf="initialized">
+          <ng-template matStepLabel>General Questionnaire</ng-template>
+          <mat-card class="Sub-card">
+            <div *ngFor="let ques of general;let i=index">
+              <div *ngIf="ques.details.answerType==='text'" [formGroupName]='ques.id'>
+                <mat-form-field appearance="legacy" style="width: 100%;">
+                  <mat-label>{{ques.questions}} </mat-label>
+                  <mat-icon matSuffix [matTooltip]='ques.details.tooltip' matTooltipPosition="left">not_listed_location
+                  </mat-icon>
+                  <input matInput [type]='ques.details.inputType' [maxlength]="ques.details.maxlength"
+                    formControlName='value' required>
+                  <mat-error *ngIf="ques.details.inputType==='number'">
+                    <!-- <span *ngIf="this.generalDetails.get(ques.id)['value'].errors">Invalid
+                      Input</span> -->
+                    <span *ngIf="this.generalDetails.controls[ques.id].controls['value'].errors">Invalid
+                      Input</span>
+                  <!-- build error -->
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngFor="let ques of general;let i=index">
+              <div *ngIf="ques.details.answerType==='radio'" [formGroupName]='ques.id'>
+                <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                <mat-radio-group class="col-float2" formControlName='value' style="padding-left: 2%" required>
+                  <mat-radio-button *ngFor='let option of ques.details["sub-options"].value;' [value]="option">
+                    {{option | titlecase }}
+                  </mat-radio-button>&nbsp;
+                </mat-radio-group>
+              </div>
+            </div>
+            <div *ngFor="let ques of general;let i=index">
+              <div *ngIf="ques.details.answerType==='radioGroup'" [formGroupName]='ques.id'>
+                <div formGroupName='value'>
+                  <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                  <mat-radio-group class="col-float2" #group="matRadioGroup" formControlName="radioValue"
+                    style="padding-left: 2%" required>
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="No">No</mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="group.value === ques.details.entryValue;else elseBlock">
+                    <mat-form-field style="width: 100%;" appearance="standard">
+                      <input matInput [maxlength]="ques.details.maxlength" value=""
+                        [placeholder]="ques.details.entryValuePlaceholder" formControlName="entryValue">
+                      <mat-icon matSuffix [matTooltip]="ques.details.tooltip" matTooltipPosition="left">
+                        not_listed_location</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <ng-template #elseBlock><br>
+                  <div><br></div>
+                </ng-template>
+              </div>
+            </div><br><br>
+            <div *ngFor="let ques of general;let i=index">
+              <div *ngIf="ques.details.answerType==='textarea'" [formGroupName]='ques.id'>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <mat-label>{{ques.questions}}</mat-label>
+                  <textarea matInput rows="5" formControlName="value"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <br><br>
+            <div class="text-center">
+              <button mat-button matStepperPrevious
+                style="background-color: silver;float:left;display:flex;">Back</button>
+              <button mat-button matStepperNext id="btndisable"
+                style="background-color: navy;color:white;float: right;display:flex;">next</button><br><br>
+            </div>
+          </mat-card>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="techDetails" *ngIf="!directSubmission">
+        <form [formGroup]="techDetails" *ngIf="initialized">
+          <ng-template matStepLabel>Technical Questionnaire</ng-template>
+          <mat-card class="Sub-card">
+            <div *ngFor="let ques of tech;let i=index">
+              <div *ngIf="ques.details.answerType==='text'" [formGroupName]='ques.id'>
+                <mat-form-field appearance="legacy" style="width: 100%;">
+                  <mat-label>{{ques.questions}} </mat-label>
+                  <mat-icon matSuffix [matTooltip]='ques.details.tooltip' matTooltipPosition="left">not_listed_location
+                  </mat-icon>
+                  <input matInput [type]='ques.details.inputType' [maxlength]="ques.details.maxlength"
+                    formControlName='value' required>
+                  <mat-error *ngIf="ques.details.inputType==='number'">
+                    <span *ngIf="this.techDetails.controls[ques.id].controls['value'].errors">Invalid
+                      Input</span> 
+                      <!-- build error -->
+                      <!-- <span *ngIf="this.techDetails.get(ques.id)['value'].errors">Invalid
+                        Input</span> -->
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngFor="let ques of tech;let i=index">
+              <div *ngIf="ques.details.answerType==='radio'" [formGroupName]='ques.id'>
+                <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                <mat-radio-group class="col-float2" formControlName='value' style="padding-left: 2%" required>
+                  <mat-radio-button *ngFor='let option of ques.details["sub-options"].value;' [value]="option">
+                    {{option | titlecase }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div *ngFor="let ques of tech;let i=index">
+              <div *ngIf="ques.details.answerType==='radioGroup'" [formGroupName]='ques.id'>
+                <div formGroupName='value'>
+                  <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                  <mat-radio-group class="col-float2" #group="matRadioGroup" formControlName="radioValue"
+                    style="padding-left: 2%" required>
+                    <mat-radio-button value="yes">Yes</mat-radio-button>
+                    <mat-radio-button value="No">No</mat-radio-button>
+                  </mat-radio-group>
+                  <div *ngIf="group.value === ques.details.entryValue;else elseBlock">
+                    <mat-form-field style="width: 100%;" appearance="standard">
+                      <input matInput [maxlength]="ques.details.maxlength" value=""
+                        [placeholder]="ques.details.entryValuePlaceholder" formControlName="entryValue">
+                      <mat-icon matSuffix [matTooltip]="ques.details.tooltip" matTooltipPosition="left">
+                        not_listed_location</mat-icon>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <ng-template #elseBlock><br>
+                  <div><br></div>
+                </ng-template>
+              </div>
+            </div><br><br>
+            <div *ngFor="let ques of tech;let i=index">
+              <div *ngIf="ques.details.answerType==='textarea'" [formGroupName]='ques.id'>
+                <mat-form-field appearance="fill" style="width: 100%;">
+                  <mat-label>{{ques.questions}}</mat-label>
+                  <textarea matInput rows="5" formControlName="value"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <br><br>
+            <button mat-button matStepperPrevious
+              style="background-color: silver;float:left;display:flex;">Back</button>
+            &nbsp; &nbsp;
+            <button mat-button matStepperNext id="btndisable"
+              [disabled]="fileNotUploaded||notSupported||!this.techDetails.valid"
+              style="background-color: navy;color:white;float: right;display:flex;">next</button><br><br>
+          </mat-card>
+        </form>
+      </mat-step>
+      <!-- <mat-step *ngIf="!directSubmission">
+        <ng-template matStepLabel>Use Case / Business Scenario</ng-template>
+        <mat-card class="Sub-card">
+          <div class="example-container">
+            <mat-card-header>
+              <mat-card-title>Use Case / Business Scenario / Test case format: This information should be provided in
+                the below format (which also has an example)</mat-card-title>
+            </mat-card-header>
+            <table>
+              <tr>
+                <th *ngFor="let column of headers">{{column}}</th>
+              </tr>
+              <tr *ngFor="let row of rows">
+                <td *ngFor="let column of headers">{{row[column]}}</td>
+              </tr>
+            </table><br><br>
+            <p style="text-align: center;"><span style="font-size: 2ch;">Please download the <a
+                  href=".\assets\files\PerformanceTestCases.xlsx">template </a> to fill in your Test Case
+                Scenarios</span><br></p>
+          </div>
+          <button mat-button matStepperPrevious style="background-color: silver;float:left;display:flex;">Back</button>
+          &nbsp; &nbsp;
+          <button mat-button matStepperNext
+            style="background-color: navy;color:white;float: right;display:flex;">next</button><br><br>
+        </mat-card>
+      </mat-step> -->
+      <mat-step *ngIf="!directSubmission">
+        <ng-template matStepLabel>EUT Server Details</ng-template>
+        <mat-card class="Sub-card">
+
+          <span class="example-header">Choose the options and fill the Details.</span>
+          <form [formGroup]="checkboxGroup" style="justify-content: center;display: flex;">
+            <mat-checkbox class="example-margin" formControlName='loadBalancer'>Load Balancer
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName='applicationServer'>
+              Application Server</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName='webServer'>Web Server
+            </mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName='databaseServer'>Database
+              Server</mat-checkbox>
+          </form>
+          <div *ngFor="let type of EUT" [formGroup]="EUTServer">
+            <form [formGroupName]='type.fgname'
+              *ngIf="type.boolean==='check'?checkboxGroup.controls[type.fgname].value:true">
+              <div class="example-container">
+                <mat-divider></mat-divider><br>
+                <span style="display: flex;justify-content: center;font-size: 17px;">{{type.name}}
+                </span>
+                <div *ngFor="let ques of type.array;let i=index">
+                  <div *ngIf="ques.details.answerType==='text'" [formGroupName]='ques.id'>
+                    <mat-form-field appearance="legacy" style="width: 100%;">
+                      <mat-label>{{ques.questions}} </mat-label>
+                      <mat-icon matSuffix [matTooltip]='ques.details.tooltip' matTooltipPosition="left">
+                        not_listed_location
+                      </mat-icon>
+                      <input matInput [type]='ques.details.inputType' [maxlength]="ques.details.maxlength"
+                        formControlName='value' required>
+                      <mat-error *ngIf="ques.details.inputType==='number'">
+                        <span
+                          *ngIf="this.EUTServer.controls[type.fgname].controls[ques.id].controls['value'].errors">Invalid
+                          Input</span>
+                           <!-- build error -->
+                          <!-- <span *ngIf="this.EUTServer.get(type.fgname)[ques.id]['value'].errors">Invalid
+                            Input</span> -->
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div *ngFor="let ques of type.array;let i=index">
+                  <div *ngIf="ques.details.answerType==='radio'" [formGroupName]='ques.id'>
+                    <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                    <mat-radio-group class="col-float2" formControlName='value' style="padding-left: 2%" required>
+                      <mat-radio-button *ngFor='let option of ques.details["sub-options"].value;' [value]="option">
+                        {{option | titlecase }}
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </div>
+                </div>
+                <div *ngFor="let ques of type.array;let i=index">
+                  <div *ngIf="ques.details.answerType==='radioGroup'" [formGroupName]='ques.id'>
+                    <div formGroupName='value'>
+                      <mat-label class="col-float1">{{ques.questions}}</mat-label>
+                      <mat-radio-group class="col-float2" #group="matRadioGroup" formControlName="radioValue"
+                        style="padding-left: 2%" required>
+                        <mat-radio-button value="yes">Yes</mat-radio-button>
+                        <mat-radio-button value="No">No</mat-radio-button>
+                      </mat-radio-group>
+                      <div *ngIf="group.value === ques.details.entryValue;else elseBlock">
+                        <mat-form-field style="width: 100%;" appearance="standard">
+                          <input matInput [maxlength]="ques.details.maxlength" value=""
+                            [placeholder]="ques.details.entryValuePlaceholder" formControlName="entryValue">
+                          <mat-icon matSuffix [matTooltip]="ques.details.tooltip" matTooltipPosition="left">
+                            not_listed_location</mat-icon>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <ng-template #elseBlock><br>
+                      <div><br></div>
+                    </ng-template>
+                  </div>
+                </div>
+                <div *ngFor="let ques of type.array;let i=index">
+                  <div *ngIf="ques.details.answerType==='textarea'" [formGroupName]='ques.id'>
+                    <mat-form-field appearance="fill" style="width: 100%;">
+                      <mat-label>{{ques.questions}}</mat-label>
+                      <textarea matInput rows="5" formControlName="value"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div *ngIf="initialized">
+            <button mat-button matStepperPrevious
+              style="background-color: silver;float:left;display:flex;">Back</button>
+            &nbsp; &nbsp;
+            <button mat-button matStepperNext id="btndisable" [disabled]="!this.miscellaneousFormGroup.valid"
+              style="background-color: navy;color:white;float: right;display:flex;">next</button><br><br>
+          </div>
+        </mat-card>
+      </mat-step>
+      <mat-step *ngIf="!directSubmission">
+        <ng-template matStepLabel>Done</ng-template>
+        <!-- <mat-card class="Sub-card"> -->
+        <div style="display: flex; justify-content: center; margin-top: 10%;">
+          <br>
+          <h2>Thank you for filling the forms.!<br>Please submit to finish the registration process.</h2>
+        </div><br>
+        <div *ngIf='errormsg' style="display: flex; justify-content: center;">
+          <mat-error class="alert  alert-warning alert-dismissible fade show">
+            <strong>Warning!&nbsp;</strong>{{message}}&nbsp; <button type="button" class="close"
+              data-dismiss="alert">&times;</button></mat-error>
+        </div>
+        <div *ngIf='false' style="display: flex; justify-content: center;">
+          <mat-error class="alert  alert-info" style="color: green;"><strong>Success!&nbsp;</strong>Please wait your
+            request is being raised. &nbsp; <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </mat-error>
+        </div>
+        <br><br>
+        <div style="display: flex; justify-content: center;">
+
+          <button mat-raised-button matStepperPrevious style="background-color: navy;color: white"
+            (click)='errormsg=false'>Go
+            Back</button>&nbsp;
+          <button mat-raised-button type="submit" id="btndisable" 
+             (click)="onSubmit()"
+            style="background-color: navy;color: white;">Submit</button>&nbsp;
+          <!-- [disabled]="disableSubmit" -->
+
+        </div>
+        <!-- </mat-card> -->
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card>
+</div>

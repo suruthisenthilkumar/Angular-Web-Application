@@ -1,0 +1,43 @@
+.close{
+    width: auto;
+  float: right;
+  font-size: 23px;
+  font-weight: bold;
+}
+    @keyframes slideDown{
+      0%{ opacity: 0 }
+      100%{ 
+       opacity: 1;
+       transform: translateY(0%);
+      }
+     }
+     ::ng-deep .mat-bottom-sheet-container  .cdk-overlay-pane{
+       position: fixed !important;
+       transform: translateY(-250%);
+       animation: slideDown 0.6s forwards 0s ease-in;
+     }
+    
+     ::ng-deep .mat-bottom-sheet-container  .cdk-overlay-container > * {
+      animation: none;
+     }
+
+  
+ 
+.add{
+    background-color: rgb(21, 38, 85);
+  }
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  /* .example-form {
+    
+    width: 80%;
+  } */
+  .content {
+      display: flex;justify-content: center;
+      width: 100%;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+  

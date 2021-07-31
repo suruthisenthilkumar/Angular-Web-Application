@@ -1,0 +1,19 @@
+<div class="center-align" style="padding-top: 2%; background-color: rgb(44, 43, 43)"><h4 style="color: white;" class="popup-title">ASSIGN SME</h4></div>
+<hr class="hr"><br>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <!-- <label class="input-group-text purple" for="inputGroupSelect01">Please select the SME to assign</label> -->
+      <label class="input-group-text" style="color: black; background-color: transparent; " for="inputGroupSelect01">Please select the SME to assign</label>
+    </div>
+        <mat-select  class="custom-select" [formControl]="sme" id="inputGroupSelect01" multiple required disableOptionCentering>
+       <mat-option *ngFor="let sme of SMEList" [value]="sme">{{sme.name}}</mat-option>
+        </mat-select>
+</div>
+
+  <br>
+ <div mat-dialog-actions class="center-align">
+   <hr class="hr">
+   <button mat-raised-button mat-dialog-close>Cancel</button>
+   <button mat-raised-button (click)="submit()" (click)='done=!done' [disabled]='!sme.valid'>Submit</button>
+ </div>

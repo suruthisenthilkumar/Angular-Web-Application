@@ -1,0 +1,99 @@
+
+
+
+<div class="view" style="background-repeat: no-repeat; background-size: cover; background-position: center center;">
+       <div class="mask rgba-gradient align-items-center">
+         <div class="container">
+           <div class="row mt-0" style="display: flex;justify-content: center;" >
+             <div class="col-md-6 col-xl-5 mb-4">
+             <div class="card wow fadeInRight">
+                <h5 class="card-header info-color white-text text-center ">
+                  <strong style="font-size: 20px;">Global Performance Assurance Center</strong>
+                </h5>
+                <div class="card-body pt-0">
+                  <span class="text-center py-3" style="font-size: 18px;display: flex;justify-content: center;"><strong>Sign In</strong> </span> 
+                  <form [formGroup]="loginForm" class="text-center" style="color: #757575;" action="#!">
+
+                    <mat-form-field  appearance="outline" class="example-full-width outline">
+                        <mat-icon matPrefix><i class="material-icons">mail</i></mat-icon>
+                        <mat-label>Email</mat-label>
+                        <input matInput maxlength="50"formControlName="email" type="text" required>
+                    </mat-form-field><br>
+                    <div  *ngIf="admin">
+                    <mat-form-field  appearance="outline" class="example-full-width outline" >
+                      <mat-icon matPrefix><i class="material-icons">https</i></mat-icon>
+                        <mat-label>Enter your Password</mat-label>
+                        <input matInput maxlength="50" [type]="hide ? 'password' : 'text'" formControlName="password"  name="password" passwordToggle required>
+                        <mat-icon matSuffix (click)="hide = !hide" >{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </mat-form-field>
+                  </div>
+                  <div  *ngIf="user">
+                    <mat-form-field appearance="outline" class="example-full-width outline">
+                      <mat-icon matPrefix><i class="material-icons">person</i></mat-icon>
+                      <mat-label>Login As</mat-label>
+                      <mat-select #loginAs name="loginAs" formControlName="loginAs" required >
+                        <mat-option value="PerformanceHead">Performance Head</mat-option>
+                        <mat-option value="PerformanceHead">Performance Lead</mat-option>
+                        <mat-option value="Manager">Manager</mat-option>
+                        <mat-option value="SME">SME</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="loginForm.controls.loginAs.errors?.required">Who do you want to Login As?</mat-error> 
+                    </mat-form-field>
+                  </div>
+                  <div  *ngIf="user">
+                    <mat-form-field appearance="outline" class="example-full-width outline">
+                      <mat-icon matPrefix >location_city</mat-icon>
+                      <mat-label>Location</mat-label>
+                      <mat-select #location name="loginAs" formControlName="location"
+                        required>
+                        <mat-option value="corp.ads.Company.net">Corporate / Head Office</mat-option>
+                        <mat-option value="lsz.ads.Company.net">Company SEZ</mat-option>
+                        <mat-option value="SLS.ads.Company.net">Company Solutions</mat-option>
+                        <mat-option value="T02.ads.Company.net">Company Technologies Unit – 2</mat-option>
+                        <mat-option value="T03.ads.Company.net">Company Technologies Unit – 3</mat-option>
+                        <mat-option value="php.ads.Company.net">PHP / Cebu Office</mat-option>
+                        <mat-option value="ro.ads.Company.net">Company Romania</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="loginForm.controls.location.errors?.required">Please select your location.</mat-error>
+                    </mat-form-field>
+                  </div>   
+              
+                    <div class="d-flex justify-content-around">
+                      <div>
+                        <!-- Remember me -->
+                        <div class="form-check">
+                          <!-- <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
+                          <label class="form-check-label" for="materialLoginFormRemember">Remember me</label> -->
+                        </div>
+                      </div>
+                      <div>
+                      </div>
+                    </div>
+                    <!-- Sign in button -->
+                    <br> 
+                    <button class="submitBtn" type="submit" (click)="login()"><span *ngIf="user;else adminVar">Next</span><ng-template #adminVar>Login</ng-template></button>
+                    <br><br>
+                    <span  *ngIf="user">Not a part of Portal?
+                      <a href="/register">Register</a> as Manager</span>
+                    <hr class="hr-light mb-3 mt-4">
+                    <!-- Register -->
+                        <span class="admin" *ngIf="user">Login as <a (click)="adminLogin()">Admin</a>?</span>
+                        <span class="user"  *ngIf="admin">Go Back <a (click)="goBack()">Click Here</a></span>
+              
+                  </form>
+                  <!-- Form -->
+              
+                </div>
+              
+              </div>
+             <!--Grid column-->
+            </div>
+           </div>
+           <!--Grid row-->
+         </div>
+         <!-- Content -->
+       </div>
+       <!-- Mask & flexbox options-->
+     </div>
+
+ 

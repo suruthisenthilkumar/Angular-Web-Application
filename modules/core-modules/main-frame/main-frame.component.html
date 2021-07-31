@@ -1,0 +1,41 @@
+<toolbar [opts]="opts"></toolbar>
+<ng-container>
+
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" opened class="example-sidenav" [fixedTopGap]="40" [fixedBottomGap]="0" #drawer
+      fixedInViewport="true" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+
+      <mat-nav-list>
+
+        <br>
+        <div> <button mat-button routerLink="/dashboard" routerLinkActive="active" id="sidenav"
+            title="Dashboard"><i class="material-icons nav-icons">home</i><br> </button></div>
+
+        <div><button mat-button routerLink="/Portal/getstarted" routerLinkActive="active" id="sidenav"
+            title="Get Started"><i class="material-icons nav-icons">directions_run</i><br> </button></div>
+
+        <!-- <div> <button mat-button routerLink="/Portal/reports" routerLinkActive="active" id="sidenav"
+            title="Reports"><i class="material-icons nav-icons">description</i><br> </button></div>  -->
+
+        <div> <button mat-button routerLink="/Portal/newrfirequest" *appUserRole="[Role.Manager]" routerLinkActive="active" id="sidenav"
+            title="Raise new request"><i class="material-icons nav-icons">loupe</i><br> </button></div>
+
+         <!-- <div><button mat-button routerLink="/Portal/repgen" routerLinkActive="active" id="sidenav"
+            title="Generate Reports"> <i class="material-icons nav-icons"> how_to_vote</i></button></div> -->
+
+       
+      </mat-nav-list>
+
+    </mat-sidenav>
+
+    <mat-sidenav-content class="background">
+      <div>
+        <!-- The entire page's content goes here within the side nave content. i.e within the router outlet -->
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
+
+</ng-container>
